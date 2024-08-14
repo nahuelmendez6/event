@@ -77,4 +77,8 @@ class Rating(db.Model):
     id_event = db.Column(db.Integer, db.ForeignKey('events.id_event'), nullable=True)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
+    user = db.relationship('Users',foreign_keys=[id_user] ,backref='ratings', lazy=True)
+    organizer = db.relationship('Users', foreign_keys=[id_organizaer], backref='ratings', lazy=True)
+    event = db.relationship('Event', backref='ratings', lazy=True)
+
 
