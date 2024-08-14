@@ -1,5 +1,5 @@
 """
-Comments: Comment, Feedback
+Comments: Comment, Feedback, Rating
 """
 from app.extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -64,3 +64,17 @@ class FeedBack(db.Model):
     # Relationships
     user = db.relationship('Users', backref='feedbacks', lazy=True)
     event = db.relationship('Event', backref='feedbacks', lazy=True)
+
+
+class Rating(db.Model):
+
+    __tablename__ = 'ratings'
+
+    id_rating = db.Column(db.Integer, primary_key=True, nullable=False)
+    rating = db.Column(db.Integer, nullable=True)
+    id_user = db.Column(db.Integer, db.ForeignKey('users.id_user'), nullable=True)
+    id_organizaer = db.Column(db.Integer, db.ForeignKey('users.id_user'), nullable=True)
+    id_event = db.Column(db.Integer, db.ForeignKey('events.id_event'), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+
