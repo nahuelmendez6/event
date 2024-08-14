@@ -1,7 +1,8 @@
 from flask import Flask
 from .config import Config
 from .extensions import db, migrate, login_manager
-from .auth import  Users
+from app.auth.models import Users
+from app.auth import auth_bp
 """
 aca despues tengo que importar los bp
 """
@@ -23,5 +24,6 @@ def create_app():
     """
     Registrar blueprints
     """
+    app.register_blueprint(auth_bp)
 
     return app

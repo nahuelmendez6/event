@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrarse</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Creá una cuenta</h1>
+            <form method="POST">
+                {{ form.hidden_tag() }}
+                <div>
+                    {{ form.username.label }} {{ form.username(size=32) }}
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.email.label }} {{ form.email() }}
+                    {% for error in form.email.errors %}
+                        <span>{{ error }}</span><br>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.password.label }} {{ form.password(size=32) }}
+                    {% for error in form.password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.confirm_password.label }} {{ form.confirm_password(size=32) }}
+                    {% for error in form.confirm_password.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.role.label }} {{ form.role }}
+                </div>
+                <div>
+                    {{ form.submit() }}
+                </div>
+            </form>
+            <form action="#" method="post">
+                <input type="email" placeholder="Dirección de correo electrónico" required>
+                <input type="email" placeholder="Confirmar email" required>
+                <input type="text" placeholder="Nombre" required>
+                <input type="text" placeholder="Apellido" required>
+                <input type="password" placeholder="Contraseña" required>
+                <button type="submit">Crear cuenta</button>
+            </form>
+        </div>
+        <div class="image-container">
+            <img src="registro.jpg" alt="Imagen de registro">
+        </div>
+    </div>
+</body>
+</html>
