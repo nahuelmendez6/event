@@ -101,14 +101,24 @@ form {
     gap: 15px;
 }
 
-form input {
+form div {
+    display:flex;
+    flex-direction:column;
+    width:70%;
+}
+
+form div input {
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-form button {
+form div #role {
+    width:50%;
+}
+
+form div #submit {
     padding: 10px;
     font-size: 16px;
     color: #ffffff;
@@ -118,9 +128,10 @@ form button {
     cursor: pointer;
 }
 
-form button:hover {
+form div #submit:hover {
     background-color: #e65a00;
 }
+
 
 .image-container {
     flex: 1;
