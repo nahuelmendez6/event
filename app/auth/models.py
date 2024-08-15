@@ -37,20 +37,19 @@ class Users(UserMixin, db.Model):
     password_hash = db.Column(db.String(255), nullable=False)
     google_id = db.Column(db.String(50), nullable=True)
     registered_via = db.Column(db.String(50), default='local', nullable=False)
-    role = db.Column(db.String(50), default='atendee', nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationship with RolePermissions
-    role_permissions = db.relationship('RolePermissions', backref='users', lazy=True)
+    #role_permissions = db.relationship('RolePermissions', backref='users', lazy=True)
 
     # Relationship with UserProfile
     profile = db.relationship('UserProfile', backref='users', uselist=False)
 
     # Relationship with Sessions
-    sessions = db.relationship('Session', backref='users', lazy=True)
+   # sessions = db.relationship('Session', backref='users', lazy=True)
 
     # Relationship with AuditLog
-    audit_logs = db.relationship('AuditLog', backref='users', lazy=True)
+   # audit_logs = db.relationship('AuditLog', backref='users', lazy=True)
 
     def set_password(self, password):
         """
@@ -126,48 +125,6 @@ class Users(UserMixin, db.Model):
                     str: A string representation of the user, showing the username.
                 """
         return f'<User {self.username}>'
-
-class Roles(db.Model):
-    """
-        Represents a role in the system.
-
-        Attributes:
-            id_role (int): The unique identifier for the role.
-            role_name (str): The name of the role.
-
-        Relationships:
-            users (RolePermissions): The permissions assigned to the role.
-        """
-
-    __tablename__ = 'roles'
-
-    id_role = db.Column(db.Integer, primary_key=True, nullable=False)
-    role_name = db.Column(db.String(255), nullable=False)
-
-    users = db.relationship('RolePermissions', backref='user', lazy=True)
-
-
-class RolePermissions(db.Model):
-    """
-       Represents the permissions assigned to a user role.
-
-       Attributes:
-           id_permissions (int): The unique identifier for the role permissions.
-           id_user (int): The identifier of the user.
-           id_role (int): The identifier of the role.
-
-       Relationships:
-           user (Users): The user associated with these permissions.
-           role (Roles): The role associated with these permissions.
-       """
-
-
-    __tablename__ = 'roles_permissions'
-
-    id_permissions = db.Column(db.Integer, primary_key=True, nullable=False)
-    id_user = db.Column(db.Integer, db.ForeignKey('users.id_user'),nullable=False)
-    id_role = db.Column(db.Integer, db.ForeignKey('roles.id_role'),nullable=False)
-
 
 class UserProfile(db.Model):
     """
