@@ -13,6 +13,18 @@
             <form method="POST">
                 {{ form.hidden_tag() }}
                 <div>
+                    {{ form.name.label }} {{ form.name(size=32) }}
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
+                    {{ form.lastname.label }} {{ form.lastname(size=32) }}
+                    {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                    {% endfor %}
+                </div>
+                <div>
                     {{ form.username.label }} {{ form.username(size=32) }}
                     {% for error in form.username.errors %}
                         <span>{{ error }}</span>

@@ -38,6 +38,8 @@ class Users(UserMixin, db.Model):
     google_id = db.Column(db.String(50), nullable=True)
     registered_via = db.Column(db.String(50), default='local', nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    name = db.Column(db.String(50), nullable=True)
+    lastname = db.Column(db.String(50), nullable=True)
 
     # Relationship with RolePermissions
     #role_permissions = db.relationship('RolePermissions', backref='users', lazy=True)
@@ -50,6 +52,9 @@ class Users(UserMixin, db.Model):
 
     # Relationship with AuditLog
    # audit_logs = db.relationship('AuditLog', backref='users', lazy=True)
+
+    def get_id(self):
+        return str(self.id_user)
 
     def set_password(self, password):
         """

@@ -3,6 +3,7 @@ from .config import Config
 from .extensions import db, migrate, login_manager
 from app.auth.models import Users
 from app.auth import auth_bp
+from app.main import index_bp
 """
 aca despues tengo que importar los bp
 """
@@ -25,5 +26,6 @@ def create_app():
     Registrar blueprints
     """
     app.register_blueprint(auth_bp)
+    app.register_blueprint(index_bp)
 
     return app

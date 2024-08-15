@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Inicio</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">EventApp</div>
+        <nav>
+            {% if current_user.is_authenticated %}
+                <a href="#" class="username">Hola, {{ current_user.name }}</a>
+                <a href="{{ url_for('auth.logout') }}">Cerrar sesión</a>
+                <a href="{{ url_for('index.index') }}">Inicio</a>
+            {% else %}
+                <a href="{{ url_for('index.index') }}">Inicio</a>
+                <a href="{{ url_for('auth.register') }}">Registrarse</a>
+                <a href="{{ url_for('auth.login') }}">Iniciar Sesión</a>
+            {% endif %}
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h1>Bienvenido a EventApp</h1>
+            <p>Encuentra y regístrate en los mejores eventos de la ciudad.</p>
+            <a href="eventos.html" class="btn-primary">Ver Eventos</a>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024 EventApp. Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>

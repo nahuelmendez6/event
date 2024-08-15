@@ -1,5 +1,5 @@
 from flask import render_template, redirect, url_for, flash
-from flask_login import login_user
+from flask_login import login_user, login_required, logout_user
 from app.auth.models import Users
 from werkzeug.security import generate_password_hash
 from . import auth_bp
@@ -18,6 +18,8 @@ def register():
                 email=form.email.data,
                 password_hash=password_hashed,
                 registered_via='local',
+                name=form.name.data,
+                lastname=form.lastname.data
             )
             db.session.add(user)
             db.session.commit()
@@ -36,7 +38,14 @@ def login():
             flash('Usuario o contraseña incorrectos', 'error')
         else:
             login_user(user)
-            return redirect(url_for('main.index'))
+            return redirect(url_for('index.index'))
 
     return render_template('login.html', form=form)
 
+
+@auth_bp.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    flash('Has salido de tu cuenta')
+    return redirect(url_for('index.index'))
