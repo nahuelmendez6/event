@@ -51,4 +51,4 @@ def logout():
     return redirect(url_for('index.index'))
 
 def send_reset_email(user):
-    pass 
+    pass
