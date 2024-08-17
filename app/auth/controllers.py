@@ -49,3 +49,6 @@ def logout():
     logout_user()
     flash('Has salido de tu cuenta')
     return redirect(url_for('index.index'))
+
+def send_reset_email(user):
+    pass 

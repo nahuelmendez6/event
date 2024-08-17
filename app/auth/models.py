@@ -2,11 +2,13 @@
 Authentication models: Users, RolePermissions, UserProfile,
 Session, AuditLog
 """
-
+import app
 from app.extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
+from itsdangerous import TimedJSONWebSignatureSerializser as Serializer
+from flask import url_for
 
 class Users(UserMixin, db.Model):
     """
@@ -121,6 +123,12 @@ class Users(UserMixin, db.Model):
                     Users: The user with the specified username, or None if not found.
                 """
         return cls.query.filter_by(username=username).first()
+
+
+    # Generacion de token de restablecimiento
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id_user}).decode('utf-8')
 
     def __repr__(self):
         """

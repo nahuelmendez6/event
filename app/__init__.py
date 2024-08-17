@@ -4,6 +4,8 @@ from .extensions import db, migrate, login_manager
 from app.auth.models import Users
 from app.auth import auth_bp
 from app.main import index_bp
+from flask_mail import Mail
+
 """
 aca despues tengo que importar los bp
 """
@@ -11,6 +13,7 @@ aca despues tengo que importar los bp
 def create_app():
     app = Flask(__name__)
     app.config.from_object(Config)
+    mail = Mail(app)
 
     # Inicializar extensiones
     db.init_app(app)
