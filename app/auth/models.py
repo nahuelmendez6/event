@@ -7,7 +7,7 @@ from app.extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
-from itsdangerous import TimedJSONWebSignatureSerializser as Serializer
+from itsdangerous import TimedSerializer as Serializer
 from flask import url_for
 
 class Users(UserMixin, db.Model):
@@ -47,7 +47,7 @@ class Users(UserMixin, db.Model):
     #role_permissions = db.relationship('RolePermissions', backref='users', lazy=True)
 
     # Relationship with UserProfile
-    profile = db.relationship('UserProfile', backref='users', uselist=False)
+   # profile = db.relationship('UserProfile', backref='users', uselist=False)
 
     # Relationship with Sessions
    # sessions = db.relationship('Session', backref='users', lazy=True)
@@ -124,12 +124,12 @@ class Users(UserMixin, db.Model):
                 """
         return cls.query.filter_by(username=username).first()
 
-
+    """
     # Generacion de token de restablecimiento
     def get_reset_token(self, expires_sec=1800):
         s = Serializer(app.config['SECRET_KEY'], expires_sec)
         return s.dumps({'user_id': self.id_user}).decode('utf-8')
-
+    """
     def __repr__(self):
         """
                 Return a string representation of the user.

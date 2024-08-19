@@ -3,10 +3,11 @@ Comunication: Message, Notification, UserNotification
 """
 
 from app.extensions import db
+from app.events.models import Event
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
-from app.auth.models import Users
+
 
 
 class Message(db.Model):
@@ -37,9 +38,9 @@ class Message(db.Model):
     sent_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationships
-    sender = db.relationship('Users', foreign_keys=[id_sender] ,backref='sent_message', lazy=True)
-    receiver = db.relationship('Users', foreign_keys=[id_receiver] ,backref='received_message', lazy=True)
-    event = db.relationship('Events', backref='event', lazy=True)
+    #sender = db.relationship('Users', foreign_keys=[id_sender] ,backref='sent_message', lazy=True)
+    #receiver = db.relationship('Users', foreign_keys=[id_receiver] ,backref='received_message', lazy=True)
+    #event = db.relationship('Events', backref='event', lazy=True)
 
 
 class Notification(db.Model):
@@ -63,7 +64,7 @@ class Notification(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationships
-    user_notifications = db.relationship('UserNotification', backref='notificacion', lazy=True)
+    #user_notifications = db.relationship('UserNotification', backref='notificacion', lazy=True)
 
 class UserNotification(db.Model):
     """
@@ -86,8 +87,8 @@ class UserNotification(db.Model):
     id_user_notification = db.Column(db.Integer, primary_key=True, nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id_user'), nullable=True)
     id_notification = db.Column(db.Integer, db.ForeignKey('notifications.id_notification'), nullable=True)
-    seen = db.Column(db.Tinyint, default=0 ,nullable=True)
+    seen = db.Column(db.Boolean, default=0 ,nullable=True)
 
     # Relationships
-    user = db.relationship('Users', backref='user_notifications', lazy=True)
-    notification = db.relationship('Notification', backref='user_notification', lazy=True)
+    #user = db.relationship('Users', backref='user_notifications', lazy=True)
+    #notification = db.relationship('Notification', backref='user_notification', lazy=True)

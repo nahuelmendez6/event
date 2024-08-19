@@ -6,7 +6,7 @@ from app.extensions import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from datetime import datetime
-from app.auth.models import Users
+
 
 
 class Event(db.Model):
@@ -52,15 +52,15 @@ class Event(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-
+    """
     # Relationships
     category = db.relationship('Categories', backref='events', lazy=True)
     organizer = db.relationship('Users', backref='organized_events', lazy=True)
-    photos = db.relationship('EventPhoto', backref='event', lazy=True)
-    sponsors = db.relationship('EventSponsor', backref='event', lazy=True)
-    tags = db.relationship('EventTag', backref='event', lazy=True)
-    attendees = db.relationship('AttendeeEvent', backref='event', lazy=True)
-
+    photos = db.relationship('EventPhoto', backref='event_parent', lazy=True)
+    sponsors = db.relationship('EventSponsor', backref='event_sponsor', lazy=True)
+    tags = db.relationship('EventTag', backref='event_tag', lazy=True)
+    attendees = db.relationship('AttendeeEvent', backref='event_atendee', lazy=True)
+    """
 
 class Categories(db.Model):
     """
@@ -80,7 +80,7 @@ class Categories(db.Model):
     category_name = db.Column(db.String(100), nullable=False)
 
     # Relationships
-    subscriptions = db.relationship('Subscription', backref='category', lazy=True)
+    #subscriptions = db.relationship('Subscription', backref='category', lazy=True)
 
 class EventPhoto(db.Model):
     """
@@ -106,7 +106,7 @@ class EventPhoto(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # Relationships
-    event = db.relationship('Event', backref='photos', lazy=True)
+    #event = db.relationship('Event', backref='photos', lazy=True)
 
 class EventSponsor(db.Model):
     """
@@ -130,7 +130,7 @@ class EventSponsor(db.Model):
     sponsor_logo = db.Column(db.String(255), nullable=True)
 
     # Relationships
-    event = db.relationship('Event', backref='sponsors', lazy=True)
+    #event = db.relationship('Event', backref='sponsors', lazy=True)
 
 
 class Tag(db.Model):
@@ -148,10 +148,10 @@ class Tag(db.Model):
     __tablename__ = 'tags'
 
     id_tag = db.Column(db.Integer, primary_key=True, nullable=False)
-    tag_name = db.Column(db.Varchar(100), nullable=False)
+    tag_name = db.Column(db.String(100), nullable=False)
 
     # Relationships
-    event = db.relationship('EventTag', backref='sponsors', lazy=True)
+    #event = db.relationship('EventTag', backref='sponsors', lazy=True)
 
 
 class EventTag(db.Model):
@@ -173,8 +173,8 @@ class EventTag(db.Model):
     id_tag = db.Column(db.Integer, db.ForeignKey('tags.id_tag'), primary_key=True, nullable=False)
 
     # Relationship
-    event = db.relationship('Event', backref='event_tags', lazy=True)
-    tag = db.relationship('Tag', backref='event_tags', lazy=True)
+    #event = db.relationship('Event', backref='event_tags', lazy=True)
+    #tag = db.relationship('Tag', backref='event_tags', lazy=True)
 
 class AttendeeEvent(db.Model):
 
@@ -200,8 +200,8 @@ class AttendeeEvent(db.Model):
     registration_date = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationships
-    event = db.relationship('Event', backref='attendees', lazy=True)
-    user = db.relationship('Users', backref='attended_events', lazy=True)
+    #event = db.relationship('Event', backref='attendees', lazy=True)
+    #user = db.relationship('Users', backref='attended_events', lazy=True)
 
 
 class Subscription(db.Model):
@@ -223,9 +223,9 @@ class Subscription(db.Model):
 
     id_subscription = db.Column(db.Integer, primary_key=True, nullable=False)
     id_user = db.Column(db.Integer, db.ForeignKey('users.id_user'), nullable=True)
-    id_category = db.Column(db.Integer, db.ForeignKey('categories.id_cagegory'), nullable=True)
+    id_category = db.Column(db.Integer, db.ForeignKey('categories.id_category'), nullable=True)
     subscription_date = db.Column(db.DateTime, default=datetime.utcnow)
 
     # Relationships
-    user = db.relationship('Users', backref='subscriptions', lazy=True)
-    category = db.relationship('Categories', backref='subscriptions', lazy=True)
+    #user = db.relationship('Users', backref='subscriptions', lazy=True)
+    #category = db.relationship('Categories', backref='subscriptions', lazy=True)
