@@ -42,6 +42,7 @@ class Users(UserMixin, db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     name = db.Column(db.String(50), nullable=True)
     lastname = db.Column(db.String(50), nullable=True)
+    description = db.Column(db.Text, nullable=True)
 
     # Relationship with RolePermissions
     #role_permissions = db.relationship('RolePermissions', backref='users', lazy=True)
